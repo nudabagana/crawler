@@ -1,6 +1,5 @@
-plan.txt
-crawl.exe.spec
 build
 dist
+dist/crawl.exe
 __pycache__
-.spec
+*.spec

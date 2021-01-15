@@ -1,8 +1,8 @@
-# kaina
-Kaina.lt item price scrapper
-
-This is a simple script to scrape https://kaina24.lt site.
+# l2 web crawler
+Simple script to watch rb times
 
 ### example usage: 
-`./kaina24.lt samsung galaxy s10 128gb`
-This will display entries from the website in this format `[shop] [link] [price]` to standard output.
+to build:
+`pyinstaller --onefile crawl.py`
+to start:
+put and fill config.txt and notif.mp3 in same directory as crawl.exe, the start it
