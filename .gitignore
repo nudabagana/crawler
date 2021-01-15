@@ -1,4 +1,6 @@
 plan.txt
 crawl.exe.spec
 build
+dist
 __pycache__
+.spec
