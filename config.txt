@@ -1,0 +1,4 @@
+[base-config]
+id_mw = mmoweb_6000434d776e55.16631939
+hour_offset = 0
+ignore_rb_below_lvl = 60
