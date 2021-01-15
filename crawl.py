@@ -165,7 +165,7 @@ def format_dead_rb_string(rb):
 
     return {"text": f.format(lvl, name, left_hh, left_mm, random_hh, random_mm,
                              spawn_start_dt.month, spawn_start_dt.day,
-                             spawn_start_dt.hour, spawn_start_dt.hour), "bg": bg}
+                             spawn_start_dt.hour, spawn_start_dt.minute), "bg": bg}
 
 
 def notify_new_raid():
