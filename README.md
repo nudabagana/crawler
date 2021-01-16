@@ -1,7 +1,9 @@
 # l2 web crawler
 Simple script to watch rb times
 
-### example usage: 
+### example usage:
+to run script:
+`python crawl.py` 
 to build:
 `pyinstaller --onefile crawl.py`
 to start:

@@ -14,7 +14,7 @@ from playsound import playsound
 
 dirname = os.path.dirname(__file__)
 config_filename = os.path.join(dirname, 'config.txt')
-notif_sound_filename = os.path.join(dirname, 'notif.mp3')
+notif_sound_filename = os.path.join(dirname, 'notif.wav')
 configParser = configparser.RawConfigParser()
 configParser.read(config_filename)
 
@@ -50,6 +50,7 @@ custom_spawn_map = {
 ignore_rb_below_lvl = int(configParser.get(
     'base-config', 'ignore_rb_below_lvl'))
 ignore_list = ['Lilith']
+allow_list = ['Core', 'Orfen', 'Queen Ant']
 
 ALIVE_KEY = 'listboxAlive'
 DEAD_KEY = 'listboxDead'
@@ -103,7 +104,7 @@ def initWindow():
     alive_column = [
         [sg.Text("Alive", text_color=color_green,
                  key=ALIVE_TEXT_KEY, size=(25, 1))],
-        [sg.Listbox(key=ALIVE_KEY, values=[], size=(30, 30))]
+        [sg.Listbox(key=ALIVE_KEY, values=[], size=(37, 30))]
     ]
     dead_column = [
         [sg.Text("Respawning", text_color=color_red,
@@ -122,15 +123,15 @@ def initWindow():
 def update_alive_data():
     global rb_data, alive_data
     alive_data = [rb for rb in rb_data if rb['status'] == 'Alive']
-    alive_data.sort(key=lambda x: x.get('lvl'),reverse=True)
+    alive_data.sort(key=lambda x: x.get('spawned_time'),reverse=True)
     alive_data = list(map(lambda rb: format_alive_rb_string(rb), alive_data))
 
 
 def format_alive_rb_string(rb):
-    f = "{: <2}lv {: <10} - {: <5}"
+    f = "{: <2}lv {: <10} - {: <5} for {: <4} min"
     lvl = rb['lvl']
     name = rb['name']
-    minutes = int(rb['spawned_ago'] / s_in_min)
+    minutes = int((time.time() - rb['spawned_time']) / s_in_min)
     bg = None
     if minutes <= 5:
         bg = color_green_bg
@@ -213,17 +214,20 @@ def update_rb_data(raids):
     old_data = rb_data
     rb_data = []
     for rb in raids:
-        if int(rb['lvl']) < ignore_rb_below_lvl or rb['name'] in ignore_list:
+        rb_name = rb['name']
+        if (int(rb['lvl']) < ignore_rb_below_lvl or rb_name in ignore_list) and rb_name not in allow_list:
             continue
 
-        short_name = rb['name'].split()[-1]
+        short_name = rb_name.split()[-1]
         new_rb_data = {'nr': rb['nr'], 'name': short_name,
                        'lvl': rb['lvl'], 'status': rb['status']}
         if (new_rb_data['status'] == 'Alive'):
-            if next((x for x in old_data if x["nr"] == rb['nr'] and x["status"] != rb['status']), None) != None: # check if new spawn happened
+            old_rb_data = next((x for x in old_data if x["nr"] == rb['nr'] and x["status"] == rb['status']), None)
+            if old_rb_data == None: # check if new spawn happened
                 new_spawn = True
-            new_rb_data['spawned_time'] = time.time()
-            new_rb_data['spawned_ago'] = 0
+                new_rb_data['spawned_time'] = time.time()
+            else:
+                new_rb_data['spawned_time'] = old_rb_data['spawned_time']
             new_rb_data['time_till_spawn'] = 0
             new_rb_data['spawn_started'] = False
             new_rb_data['spawn_random_time'] = 0
@@ -234,13 +238,11 @@ def update_rb_data(raids):
             death_ms = death_ms + hour_offset * s_in_h
             min_spawn_ms = default_spawn_time
             spawn_random_time = default_random_time
-            rb_name = rb['name']
             if rb_name in custom_spawn_map:
                 min_spawn_ms = custom_spawn_map[rb_name]["spawn_time"]
                 spawn_random_time = custom_spawn_map[rb_name]["random_time"]
             spawn_start_time = death_ms + min_spawn_ms
             new_rb_data['spawned_time'] = 0
-            new_rb_data['spawned_ago'] = 0
             new_rb_data['spawn_start_time'] = spawn_start_time
             new_rb_data['time_till_spawn'] = spawn_start_time - time.time()
             new_rb_data['spawn_random_time'] = spawn_random_time
