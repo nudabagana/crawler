@@ -1,5 +1,6 @@
+*.spec
+
+__pycache__
 build
 dist
-dist/crawl.exe
-__pycache__
-*.spec
+.vscode
