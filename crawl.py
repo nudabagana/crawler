@@ -47,10 +47,18 @@ custom_spawn_map = {
     "Flame of Splendor Barakiel": {"spawn_time": 8 * s_in_h, "random_time": 10 * s_in_min},
 }
 
+custom_name_map = {
+    "Flamestone Giant":   "Flamestone",
+    "Ancient Weird Drake": "Ancient D",
+    "Queen Ant": "AQ",
+    "Hestia, Guardian Deity of the Hot Springs": "Hestia",
+}
+
 ignore_rb_below_lvl = int(configParser.get(
     'base-config', 'ignore_rb_below_lvl'))
-ignore_list = ['Lilith']
-allow_list = ['Core', 'Orfen', 'Queen Ant']
+ignore_list = ['Lilith', "Kernon's Faithful Servant Kelone",
+               "Benom", "Heart of Volcano"]
+allow_list = ['Core', 'Orfen', 'Queen Ant', 'Lord Ishka']
 
 ALIVE_KEY = 'listboxAlive'
 DEAD_KEY = 'listboxDead'
@@ -123,7 +131,7 @@ def initWindow():
 def update_alive_data():
     global rb_data, alive_data
     alive_data = [rb for rb in rb_data if rb['status'] == 'Alive']
-    alive_data.sort(key=lambda x: x.get('spawned_time'),reverse=True)
+    alive_data.sort(key=lambda x: x.get('spawned_time'), reverse=True)
     alive_data = list(map(lambda rb: format_alive_rb_string(rb), alive_data))
 
 
@@ -217,13 +225,15 @@ def update_rb_data(raids):
         rb_name = rb['name']
         if (int(rb['lvl']) < ignore_rb_below_lvl or rb_name in ignore_list) and rb_name not in allow_list:
             continue
-
         short_name = rb_name.split()[-1]
+        if rb_name in custom_name_map:
+            short_name = custom_name_map[rb_name]
         new_rb_data = {'nr': rb['nr'], 'name': short_name,
                        'lvl': rb['lvl'], 'status': rb['status']}
         if (new_rb_data['status'] == 'Alive'):
-            old_rb_data = next((x for x in old_data if x["nr"] == rb['nr'] and x["status"] == rb['status']), None)
-            if old_rb_data == None: # check if new spawn happened
+            old_rb_data = next(
+                (x for x in old_data if x["nr"] == rb['nr'] and x["status"] == rb['status']), None)
+            if old_rb_data == None:  # check if new spawn happened
                 new_spawn = True
                 new_rb_data['spawned_time'] = time.time()
             else:
