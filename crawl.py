@@ -57,7 +57,7 @@ custom_name_map = {
 ignore_rb_below_lvl = int(configParser.get(
     'base-config', 'ignore_rb_below_lvl'))
 ignore_list = ['Lilith', "Kernon's Faithful Servant Kelone",
-               "Benom", "Heart of Volcano"]
+               "Benom", "Heart of Volcano", "Eva's Guardian Millenu"]
 allow_list = ['Core', 'Orfen', 'Queen Ant', 'Lord Ishka']
 
 ALIVE_KEY = 'listboxAlive'
