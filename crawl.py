@@ -19,8 +19,8 @@ notif_sound_filename = os.path.join(dirname, 'notif.wav')
 configParser = configparser.RawConfigParser()
 configParser.read(config_filename)
 
-# Paste Session ID HERE
 id_mw = configParser.get('base-config', 'id_mw')
+server = configParser.get('base-config', 'server')
 color_green = "#2bbd5d"
 color_red = "#e62020"
 color_red_bg = "#ffbaba"
@@ -197,12 +197,12 @@ def updateList():
 def fetch_data():
     global rb_data, error
     cookies = {
-        'PHPSESSID': '1395e9de8925589f0441ea31221b8673',
-        '_fbp': 'fb.1.1602499220334.475332614',
-        '__cfduid': 'da3292ac53acf5a393c582d2bc1ce0a261608156963',
+        'PHPSESSID': 'ad9a1c67f25dd932097ac4ad5b9a518d',
+        '_fbp': 'fb.1.1611319081765.602446553',
+        '__cfduid': 'dd31d55030b3e6ea5e9562ed647c7db921611319080',
         'utm_source': '	lineage2dex.com',
-        'fixed': 'elem346%2Celem306',
-        'id_mw': id_mw}
+        'id_mw': id_mw,
+        'server': server}
     url = 'https://lineage2dex.com/cabinet/rating'
 
     data = requests.get(url, cookies=cookies).text
