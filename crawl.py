@@ -21,6 +21,7 @@ configParser.read(config_filename)
 
 # Paste Session ID HERE
 id_mw = configParser.get('base-config', 'id_mw')
+server = configParser.get('base-config', 'server')
 color_green = "#2bbd5d"
 color_red = "#e62020"
 color_red_bg = "#ffbaba"
@@ -201,8 +202,8 @@ def fetch_data():
         '_fbp': 'fb.1.1602499220334.475332614',
         '__cfduid': 'da3292ac53acf5a393c582d2bc1ce0a261608156963',
         'utm_source': '	lineage2dex.com',
-        'fixed': 'elem346%2Celem306',
-        'id_mw': id_mw}
+        'id_mw': id_mw,
+        'server': server}
     url = 'https://lineage2dex.com/cabinet/rating'
 
     data = requests.get(url, cookies=cookies).text
