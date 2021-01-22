@@ -11,6 +11,7 @@ import math
 import configparser
 import os
 from playsound import playsound
+import json
 
 dirname = os.path.dirname(__file__)
 config_filename = os.path.join(dirname, 'config.txt')
@@ -53,12 +54,12 @@ custom_name_map = {
     "Queen Ant": "AQ",
     "Hestia, Guardian Deity of the Hot Springs": "Hestia",
 }
-
 ignore_rb_below_lvl = int(configParser.get(
     'base-config', 'ignore_rb_below_lvl'))
-ignore_list = ['Lilith', "Kernon's Faithful Servant Kelone",
-               "Benom", "Heart of Volcano", "Eva's Guardian Millenu"]
-allow_list = ['Core', 'Orfen', 'Queen Ant', 'Lord Ishka']
+ignore_rb_above_lvl = int(configParser.get(
+    'base-config', 'ignore_rb_above_lvl'))
+ignore_list = json.loads(configParser.get('base-config', 'ignore_list'))
+allow_list = json.loads(configParser.get('base-config', 'allow_list'))
 
 ALIVE_KEY = 'listboxAlive'
 DEAD_KEY = 'listboxDead'
@@ -223,7 +224,8 @@ def update_rb_data(raids):
     rb_data = []
     for rb in raids:
         rb_name = rb['name']
-        if (int(rb['lvl']) < ignore_rb_below_lvl or rb_name in ignore_list) and rb_name not in allow_list:
+        lvl = int(rb['lvl'])
+        if (lvl < ignore_rb_below_lvl or lvl > ignore_rb_above_lvl or rb_name in ignore_list) and rb_name not in allow_list:
             continue
         short_name = rb_name.split()[-1]
         if rb_name in custom_name_map:
