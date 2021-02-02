@@ -1,9 +1,9 @@
 [base-config]
-id_mw = mmoweb_6000434d776e55.16631939
+id_mw = mmoweb_600e7d9c1220d3.18937365
 # NEW = 346, UNION = 306
 server = 346
 hour_offset = 0
 ignore_rb_below_lvl = 61
-ignore_rb_above_lvl = 73
-ignore_list = ["Lilith", "Kernon's Faithful Servant Kelone", "Benom", "Heart of Volcano", "Eva's Guardian Millenu"]
+ignore_rb_above_lvl = 99
+ignore_list = ["Lilith", "Anakim", Kernon's Faithful Servant Kelone", "Benom", "Heart of Volcano", "Eva's Guardian Millenu", "Demon Kurikups"]
 allow_list = ["Core", "Orfen", "Queen Ant", "Lord Ishka", "Fairy Queen Timiniel"]
