@@ -5,5 +5,5 @@ server = 346
 hour_offset = 0
 ignore_rb_below_lvl = 61
 ignore_rb_above_lvl = 99
-ignore_list = ["Lilith", "Anakim", Kernon's Faithful Servant Kelone", "Benom", "Heart of Volcano", "Eva's Guardian Millenu", "Demon Kurikups"]
+ignore_list = ["Lilith", "Anakim", "Kernon's Faithful Servant Kelone", "Benom", "Heart of Volcano", "Eva's Guardian Millenu", "Demon Kurikups"]
 allow_list = ["Core", "Orfen", "Queen Ant", "Lord Ishka", "Fairy Queen Timiniel"]
